@@ -1,6 +1,6 @@
 const fs = require("fs")
 const path = require("path")
-
+const productId = 0
 const p = path.join(
   path.dirname(process.mainModule.filename),
   "data",
@@ -26,6 +26,7 @@ module.exports = class Product {
   }
 
   save() {
+    this.id = (productId + 1).toString()
     getProductsFromFile(products => {
       products.push(this)
       fs.writeFile(p, JSON.stringify(products), err => {
@@ -36,5 +37,12 @@ module.exports = class Product {
 
   static fetchAll(cb) {
     getProductsFromFile(cb)
+  }
+
+  static findById(id, cb) {
+    getProductsFromFile(products => {
+      const found = products.find(currentProduct => currentProduct.id === id)
+      cb(found)
+    })
   }
 }

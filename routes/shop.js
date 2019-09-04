@@ -10,7 +10,12 @@ router.get("/", shopController.getIndex)
 
 router.get("/products", shopController.getProducts)
 
+// putting a /:identifier in the path for express.Router() tells it to expect a dynamic variable rather than a static path.
+router.get("/products/:productId", shopController.getDetails)
+
 router.get("/cart", shopController.getCart)
+
+router.post("/cart", shopController.addToCart)
 
 router.get("/orders", shopController.getOrders)
 
